@@ -1,16 +1,110 @@
-//your variable declarations here
+SpaceShip sardine = new SpaceShip();
 public void setup() 
 {
-  //your code here
+  size(720, 480);
+  sardine.setX(width/2);
+  sardine.setY(height/2);
 }
+
 public void draw() 
 {
-  //your code here
+  background(0);
+  sardine.show();
+    sardine.move();
 }
-class SpaceShip //extends Floater  
-{   
-    //your code here
+
+public void keyPressed()
+{
+  if(keyCode == UP){
+    sardine.accelerate(.5);
+  }
+  if(keyCode == DOWN){
+    sardine.setX((int)(Math.random()*width)+0);
+    sardine.setY((int)(Math.random()*height)+0);
+    sardine.setDirectionX(0);
+    sardine.setDirectionY(0);
+  }
+  if(keyCode == LEFT){
+    sardine.rotate(-5);
+  }
+  if(keyCode == RIGHT){
+    sardine.rotate(5);
+  }
+  /*
+  if(keyCode == TAB){
+
+  }
+  */
 }
+
+class SpaceShip extends Floater //The Spaceship! 
+{ 
+public SpaceShip()
+{
+corners = 4;
+xCorners = new int[corners];
+yCorners = new int[corners];
+xCorners[0] = -8;
+yCorners[0] = -8;
+xCorners[1] = 16;
+yCorners[1] = 0;
+xCorners[2] = -8;
+yCorners[2] = 8;
+xCorners[3] = -2;
+yCorners[3] = 0;
+myColor = 255;
+}
+public void setX(int x){myCenterX = x;}  
+public int getX(){return (int)myCenterX;}   
+public void setY(int y){myCenterY = y;}  
+public int getY(){return (int)myCenterY;}  
+public void setDirectionX(double x){myDirectionX = x;}   
+public double getDirectionX(){return (int)myDirectionX;} 
+public void setDirectionY(double y){myDirectionY = y;}  
+public double getDirectionY(){return (int)myDirectionY;}
+public void setPointDirection(int degrees){myPointDirection = degrees;}   
+public double getPointDirection(){return (int)myPointDirection;} 
+}
+
+class Asteroid extends Floater
+{
+  private int rotSpeed;
+  public Asteroid()
+  {
+    corners = 6;
+    xCorners = new int[corners];
+    yCorners = new int[corners];
+    xCorners[0] = -11;
+    yCorners[0] = -8;
+    xCorners[1] = 7;
+    yCorners[1] = -8;
+    xCorners[2] = 13;
+    yCorners[2] = 0;
+    xCorners[3] = 6;
+    yCorners[3] = 10;
+    xCorners[4] = -11;
+    yCorners[4] = 8;
+    xCorners[5] = -5;
+    yCorners[5] = 0;
+    myColor = 100;
+  }
+  public void move()
+  {
+    rotate(rotSpeed);
+    super.move();
+  }
+  public void setX(int x){myCenterX = x;}  
+  public int getX(){return (int)myCenterX;}   
+  public void setY(int y){myCenterY = y;}  
+  public int getY(){return (int)myCenterY;}  
+  public void setDirectionX(double x){myDirectionX = x;}   
+  public double getDirectionX(){return (int)myDirectionX;} 
+  public void setDirectionY(double y){myDirectionY = y;}  
+  public double getDirectionY(){return (int)myDirectionY;}
+  public void setPointDirection(int degrees){myPointDirection = degrees;}   
+  public double getPointDirection(){return (int)myPointDirection;} 
+}
+
 abstract class Floater //Do NOT modify the Floater class! Make changes in the SpaceShip class 
 {   
   protected int corners;  //the number of corners, a triangular floater has 3   
