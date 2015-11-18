@@ -1,16 +1,26 @@
 SpaceShip sardine = new SpaceShip();
+Asteroid [] astr = new Asteroid [20];
 public void setup() 
 {
   size(720, 480);
   sardine.setX(width/2);
   sardine.setY(height/2);
+  for (int i = 0; i < astr.length; ++i) {
+    astr[i] = new Asteroid();
+    astr[i].setX((int)(Math.random()*width)+0);
+    astr[i].setY((int)(Math.random()*height)+0);
+  }
 }
 
 public void draw() 
 {
   background(0);
   sardine.show();
-    sardine.move();
+  sardine.move();
+  for (int i = 0; i < astr.length; ++i) {
+    astr[i].show();
+    astr[i].move();
+  }
 }
 
 public void keyPressed()
@@ -87,6 +97,7 @@ class Asteroid extends Floater
     xCorners[5] = -5;
     yCorners[5] = 0;
     myColor = 100;
+    rotSpeed = 2;
   }
   public void move()
   {
