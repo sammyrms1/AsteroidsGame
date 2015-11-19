@@ -1,8 +1,8 @@
 SpaceShip sardine = new SpaceShip();
-Asteroid [] astr = new Asteroid [20];
+Asteroid [] astr = new Asteroid [30];
 public void setup() 
 {
-  size(720, 480);
+  size(800, 600);
   sardine.setX(width/2);
   sardine.setY(height/2);
   for (int i = 0; i < astr.length; ++i) {
@@ -40,11 +40,10 @@ public void keyPressed()
   if(keyCode == RIGHT){
     sardine.rotate(5);
   }
-  /*
-  if(keyCode == TAB){
+  if(key == 'z'){
 
   }
-  */
+  
 }
 
 class SpaceShip extends Floater //The Spaceship! 
