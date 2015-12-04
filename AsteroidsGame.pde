@@ -1,14 +1,16 @@
 SpaceShip sardine = new SpaceShip();
-Asteroid [] astr = new Asteroid [30];
+ArrayList <Asteroid> astr = new ArrayList <Asteroid>();
+//ArrayList <Bullet> shot = new ArrayList <Bullet>();
+
 public void setup() 
 {
   size(800, 600);
   sardine.setX(width/2);
   sardine.setY(height/2);
-  for (int i = 0; i < astr.length; ++i) {
-    astr[i] = new Asteroid();
-    astr[i].setX((int)(Math.random()*width)+0);
-    astr[i].setY((int)(Math.random()*height)+0);
+  for (int i = 0; i < astr.size(); ++i) {
+    astr.add(new Asteroid());
+    astr.get(i).setX((int)(Math.random()*width)+0);
+    astr.get(i).setY((int)(Math.random()*height)+0);
   }
 }
 
@@ -17,9 +19,9 @@ public void draw()
   background(0);
   sardine.show();
   sardine.move();
-  for (int i = 0; i < astr.length; ++i) {
-    astr[i].show();
-    astr[i].move();
+  for (int i = 0; i < astr.size(); ++i) {
+    astr.get(i).show();
+    astr.get(i).move();
   }
 }
 
@@ -41,7 +43,6 @@ public void keyPressed()
     sardine.rotate(5);
   }
   if(key == 'z'){
-
   }
   
 }
@@ -74,6 +75,34 @@ public double getDirectionY(){return (int)myDirectionY;}
 public void setPointDirection(int degrees){myPointDirection = degrees;}   
 public double getPointDirection(){return (int)myPointDirection;} 
 }
+
+class Bullet extends Floater //Bullet
+{
+  public Bullet(SpaceShip sardine)
+  {
+  }
+  public void show()
+  {
+
+  }
+
+  public void move()
+  {
+    super.move();
+  }
+
+  public void setX(int x){myCenterX = x;}  
+  public int getX(){return (int)myCenterX;}   
+  public void setY(int y){myCenterY = y;}  
+  public int getY(){return (int)myCenterY;}  
+  public void setDirectionX(double x){myDirectionX = x;}   
+  public double getDirectionX(){return (int)myDirectionX;} 
+  public void setDirectionY(double y){myDirectionY = y;}  
+  public double getDirectionY(){return (int)myDirectionY;}
+  public void setPointDirection(int degrees){myPointDirection = degrees;}   
+  public double getPointDirection(){return (int)myPointDirection;} 
+}
+
 
 class Asteroid extends Floater
 {
