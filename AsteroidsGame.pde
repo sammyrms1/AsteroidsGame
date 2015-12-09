@@ -1,16 +1,20 @@
 SpaceShip sardine = new SpaceShip();
 ArrayList <Asteroid> astr = new ArrayList <Asteroid>();
-//ArrayList <Bullet> shot = new ArrayList <Bullet>();
+ArrayList <Bullet> shot = new ArrayList <Bullet>();
 
 public void setup() 
 {
   size(800, 600);
   sardine.setX(width/2);
   sardine.setY(height/2);
+  for (int i = 0; i < 20; ++i) {
+    astr.add(i, new Asteroid());
+  }
   for (int i = 0; i < astr.size(); ++i) {
-    astr.add(new Asteroid());
     astr.get(i).setX((int)(Math.random()*width)+0);
     astr.get(i).setY((int)(Math.random()*height)+0);
+    astr.get(i).rotate((int)(Math.random()*270)+0);
+    astr.get(i).accelerate(1);
   }
 }
 
@@ -78,9 +82,7 @@ public double getPointDirection(){return (int)myPointDirection;}
 
 class Bullet extends Floater //Bullet
 {
-  public Bullet(SpaceShip sardine)
-  {
-  }
+  public Bullet(SpaceShip sardine){}
   public void show()
   {
 
