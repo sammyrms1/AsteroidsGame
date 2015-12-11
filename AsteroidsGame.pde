@@ -1,19 +1,23 @@
 SpaceShip sardine = new SpaceShip();
 ArrayList <Asteroid> astr = new ArrayList <Asteroid>();
 ArrayList <Bullet> shot = new ArrayList <Bullet>();
+int numShips = 3;
 
 public void setup() 
 {
   size(800, 600);
   sardine.setX(width/2);
   sardine.setY(height/2);
+   for (int i = 0; i < 1; ++i) {
+   shot.add(i, new Bullet(sardine));
+  }
   for (int i = 0; i < 20; ++i) {
     astr.add(i, new Asteroid());
   }
   for (int i = 0; i < astr.size(); ++i) {
     astr.get(i).setX((int)(Math.random()*width)+0);
     astr.get(i).setY((int)(Math.random()*height)+0);
-    astr.get(i).rotate((int)(Math.random()*270)+0);
+    astr.get(i).rotate((int)(Math.random()*360)+0);
     astr.get(i).accelerate(1);
   }
 }
@@ -21,11 +25,41 @@ public void setup()
 public void draw() 
 {
   background(0);
+  hud();
   sardine.show();
   sardine.move();
+  for (int i = 0; i < shot.size(); ++i) {
+   shot.get(i).show();
+   shot.get(i).move();
+  }
   for (int i = 0; i < astr.size(); ++i) {
     astr.get(i).show();
     astr.get(i).move();
+    if(dist(astr.get(i).getX(), astr.get(i).getY(), sardine.getX(), sardine.getY()) < 20){
+      sardine.setX(width/2);
+      sardine.setY(height/2);
+      sardine.setDirectionX(0);
+      sardine.setDirectionY(0);
+      numShips--;
+    }
+  }
+  /*if(dist(x1, y1, x2, y2) < 20){
+    astr.remove(0);
+  }
+
+  */
+}
+
+public void hud(){
+  textAlign(LEFT);
+  textSize(20);
+  fill(255);
+  text("Ships left: " + numShips, 0, 20);
+  if (numShips <= 0) {
+    textSize(50);
+    textAlign(CENTER);
+    text("Game Over", width/2, height/2);
+    noLoop();
   }
 }
 
@@ -47,47 +81,60 @@ public void keyPressed()
     sardine.rotate(5);
   }
   if(key == 'z'){
+  for (int i = 0; i < shot.size(); ++i) {
+   shot.get(i).accelerate(5);
+  }
   }
   
 }
 
 class SpaceShip extends Floater //The Spaceship! 
 { 
-public SpaceShip()
-{
-corners = 4;
-xCorners = new int[corners];
-yCorners = new int[corners];
-xCorners[0] = -8;
-yCorners[0] = -8;
-xCorners[1] = 16;
-yCorners[1] = 0;
-xCorners[2] = -8;
-yCorners[2] = 8;
-xCorners[3] = -2;
-yCorners[3] = 0;
-myColor = 255;
-}
-public void setX(int x){myCenterX = x;}  
-public int getX(){return (int)myCenterX;}   
-public void setY(int y){myCenterY = y;}  
-public int getY(){return (int)myCenterY;}  
-public void setDirectionX(double x){myDirectionX = x;}   
-public double getDirectionX(){return (int)myDirectionX;} 
-public void setDirectionY(double y){myDirectionY = y;}  
-public double getDirectionY(){return (int)myDirectionY;}
-public void setPointDirection(int degrees){myPointDirection = degrees;}   
-public double getPointDirection(){return (int)myPointDirection;} 
+  public SpaceShip()
+  {
+  corners = 4;
+  xCorners = new int[corners];
+  yCorners = new int[corners];
+  xCorners[0] = -8;
+  yCorners[0] = -8;
+  xCorners[1] = 16;
+  yCorners[1] = 0;
+  xCorners[2] = -8;
+  yCorners[2] = 8;
+  xCorners[3] = -2;
+  yCorners[3] = 0;
+  myColor = 255;
+  }
+  public void setX(int x){myCenterX = x;}  
+  public int getX(){return (int)myCenterX;}   
+  public void setY(int y){myCenterY = y;}  
+  public int getY(){return (int)myCenterY;}  
+  public void setDirectionX(double x){myDirectionX = x;}   
+  public double getDirectionX(){return (int)myDirectionX;} 
+  public void setDirectionY(double y){myDirectionY = y;}  
+  public double getDirectionY(){return (int)myDirectionY;}
+  public void setPointDirection(int degrees){myPointDirection = degrees;}   
+  public double getPointDirection(){return (int)myPointDirection;} 
 }
 
 class Bullet extends Floater //Bullet
 {
-  public Bullet(SpaceShip sardine){}
-  public void show()
-  {
-
+  public Bullet(SpaceShip sardine){
+    corners = 2;
+    xCorners = new int[corners];
+    yCorners = new int[corners];
+    xCorners[0] = 0;
+    yCorners[0] = 0;
+    xCorners[1] = 2;
+    yCorners[1] = 0;
+    myCenterX = sardine.getX();
+    myCenterY = sardine.getY();
+    myPointDirection = sardine.getPointDirection();
+    double dRadians = myPointDirection*(Math.PI/180);
+    myDirectionX = sardine.getDirectionX();
+    myDirectionY = sardine.getDirectionY();
+    myColor = 255;
   }
-
   public void move()
   {
     super.move();
